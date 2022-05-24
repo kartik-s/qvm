@@ -39,6 +39,6 @@ NUM-ELEMENTS ELEMENT-TYPE objects."
         (values vect
                 (shm-vector-cleanup-thunk vect))))))
 
-
-(defun call-at-exit (fun)
-  (push fun ccl:*lisp-cleanup-functions*))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun call-at-exit (fun)
+    (push fun ccl:*lisp-cleanup-functions*)))

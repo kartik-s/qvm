@@ -2,9 +2,10 @@
 
 (in-package #:qvm)
 
-(defun call-at-exit (fun)
-  "Ensure that FUN is called when the Lisp implementation stops."
-  (pushnew fun sb-ext:*exit-hooks* :test 'eq))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun call-at-exit (fun)
+    "Ensure that FUN is called when the Lisp implementation stops."
+    (pushnew fun sb-ext:*exit-hooks* :test 'eq)))
 
 (defun shm-vector-header-size ()
   (* sb-vm:vector-data-offset sb-vm:n-word-bytes))
